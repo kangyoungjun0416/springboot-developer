@@ -1,0 +1,40 @@
+package me.dmddo.springdeveloper.service;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import me.dmddo.springdeveloper.dao.Article;
+import me.dmddo.springdeveloper.dto.AddArticleRequest;
+import me.dmddo.springdeveloper.dto.UpdateArticleRequest;
+import me.dmddo.springdeveloper.repository.BlogRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class BlogService {
+    private final BlogRepository blogRepository;
+
+    public Article save(AddArticleRequest articleRequest){
+        return blogRepository.save(articleRequest.toEntity());
+    }
+
+    public List<Article> findAll() {
+        return blogRepository.findAll();
+    }
+
+    public Article findById(long id) {
+        return blogRepository.findById(id).orElseThrow(()->new IllegalArgumentException("not found:" +id));
+    }
+
+    public void delete(long id) {
+        blogRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Article update(long id, UpdateArticleRequest request) {
+        Article article = blogRepository.findById(id).orElseThrow(()->new IllegalArgumentException("not found: "+ id));
+        article.update(request.getTitle(), request.getContent());
+        return article;
+    }
+}

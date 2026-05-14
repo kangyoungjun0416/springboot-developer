@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>안녕하세용<span th:text="${name}"></span></h1>
+<table>
+<!--    <div>-->
+<!--        <p th:text="${person.name}"></p>-->
+<!--        <p th:text="${person.age}"></p>-->
+<!--        <p th:text="${person.id}"></p>-->
+<!--    </div>-->
+
+    <div th:object="${person}">
+        <p th:text="|이름: *{name}|"></p>
+        <p th:text="|나이: *{age}|"></p>
+        <p th:text="|아이디: *{id}|"></p>
+
+        <!-- 취미를 ul 태그를 통해 동적으로 생성되도록 하시오. -->
+        <ul>
+            <li th:each="hobby : *{hobbies}" th:text="${hobby}"></li>
+        </ul>
+
+        <p></p>
+        <p></p>
+    </div>
+
+    <tr th:each="item: ${articles}">
+        <th th:text="${item.title}"></th>
+        <th th:text="${item.content}"></th>
+    </tr>
+</table>
+<div th:if="${error!=null}">
+    에러가 발생했단다
+</div>
+
+<!--    <div th:unless="${error!=null}">-->q
+<!--        정상수-->
+<!--    </div>-->
+<div th:if="${error==null}">
+    끼야아에에엥아에아ㅔ아ㅔ에ㅑ에ㅑ에ㅑ에ㅑ에ㅑ에ㅑㅔ야ㅔ야ㅔ야ㅔ에아ㅔ아에에ㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔㅔ
+</div>
+
+<p th:text="${#temporals.format(today, 'MM-dd-yyyy')}"></p>
+</body>
+</html>
